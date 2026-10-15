@@ -1,13 +1,26 @@
 ﻿Set-Content -Path "README.md" -Encoding utf8 -Value @'
-# Phishing Website Detector — ML-Based URL Classification
+# 🛡️ Phishing Website Detector — ML-Based URL Classification
 
-A machine learning-based cybersecurity application that analyzes URLs and classifies them as potentially legitimate or phishing using lexical, structural, and statistical URL features. Built with **Python, Flask, and a Random Forest classifier**, the project provides a web dashboard, command-line predictions, heuristic security diagnostics, and a REST API.
+A machine learning-based cybersecurity application that analyzes URLs and classifies them as potentially legitimate or phishing using lexical, structural, and statistical URL features. Built with **Python, Flask, and a Random Forest classifier**, the project is designed to support URL analysis through a web dashboard, command-line predictions, heuristic security diagnostics, and a REST API where implemented.
 
-The application is designed as a defensive analysis tool to help identify suspicious links. Predictions are advisory and do not guarantee that a website is safe or malicious.
+The application is intended for defensive cybersecurity analysis. Predictions are advisory and do not guarantee that a website is safe or malicious.
 
 ---
 
-## Table of Contents
+## 🌐 Live Demo
+
+🔗 **Live Website:** [Phishing Website Detector](https://dhananjaychaudhary99.github.io/Phishing-Website-Detector/)
+
+📂 **Source Code:** [GitHub Repository](https://github.com/dhananjaychaudhary99/Phishing-Website-Detector)
+
+🚀 **Hosting:** GitHub Pages  
+🔒 **HTTPS:** Enabled
+
+> **Deployment note:** GitHub Pages hosts static files and does not execute Python or Flask. If the application requires a Flask backend for model predictions, deploy that backend separately and configure the frontend to call its HTTPS API.
+
+---
+
+## 📑 Table of Contents
 
 - [Overview](#overview)
 - [Key Features](#key-features)
@@ -32,41 +45,41 @@ The application is designed as a defensive analysis tool to help identify suspic
 
 ---
 
-## Overview
+## 📌 Overview
 
-Phishing attacks use deceptive URLs and websites to trick users into revealing passwords, financial information, and other sensitive data. This project explores how machine learning and URL-based feature engineering can help detect suspicious links.
+Phishing attacks use deceptive URLs and websites to trick users into revealing passwords, financial information, and other sensitive data. This project explores how machine learning and URL-based feature engineering can help identify suspicious links.
 
-The system extracts configured URL characteristics, transforms them into a feature representation, and passes the resulting data to a trained classification model. The application can present the prediction alongside heuristic warnings when those diagnostics are implemented.
+The application processes URL characteristics, converts them into features, and uses a trained classification model to predict a URL's category. Depending on the implementation, results may also include heuristic warnings and diagnostic information.
 
-### Project Objectives
+### 🎯 Project Objectives
 
 - Identify potentially suspicious URLs through automated classification.
 - Apply machine learning to lexical and structural URL characteristics.
-- Provide interpretable security indicators alongside classification results.
-- Support predictions through a web interface, command-line interface, and REST API.
-- Separate feature extraction, model training, inference, and presentation logic.
-- Support repeatable development and testing workflows.
+- Present classification results through a user-friendly interface.
+- Support command-line and API-based predictions where implemented.
+- Separate feature extraction, training, inference, and presentation logic.
+- Promote awareness of phishing attacks and safer browsing practices.
 
 ---
 
-## Key Features
+## ✨ Key Features
 
-- **URL Feature Extraction:** Analyzes configured characteristics such as URL length, IP-address usage, subdomain structure, and suspicious keywords.
-- **Machine Learning Classification:** Uses a Random Forest classifier trained on labeled URL data.
-- **Security Diagnostics:** Provides heuristic warnings for configured suspicious URL patterns.
-- **Flask Web Dashboard:** Offers a browser-based interface for URL analysis.
-- **Command-Line Predictions:** Supports URL classification from the terminal.
-- **REST API:** Enables JSON-based integration with other applications.
-- **Model Persistence:** Saves the trained model for reuse during inference.
+- **URL Feature Extraction:** Extracts configured characteristics such as URL length, hostname structure, and suspicious patterns.
+- **Machine Learning Classification:** Uses a trained Random Forest model, if provided by the implementation.
+- **Security Diagnostics:** Supports heuristic warnings for configured suspicious URL patterns.
+- **Web Dashboard:** Provides a browser-based interface when the frontend is connected to the application.
+- **Command-Line Predictions:** Supports terminal-based analysis if a CLI is implemented.
+- **REST API:** Enables JSON-based integration if the corresponding endpoints are implemented.
+- **Model Persistence:** Allows a trained model to be saved and reused for inference.
 - **Data Processing:** Supports dataset preparation and feature extraction.
-- **Automated Testing:** Uses pytest for regression testing.
-- **Modular Architecture:** Separates the web application, model, training pipeline, and feature extraction logic.
+- **Automated Testing:** Supports regression testing using pytest when tests are available.
+- **Modular Architecture:** Organizes application responsibilities into reusable components.
 
-> Feature availability depends on the actual implementation and configuration in the repository.
+> Feature availability depends on the files and configuration present in the repository.
 
 ---
 
-## Technology Stack
+## 🧰 Technology Stack
 
 | Category | Technology |
 |---|---|
@@ -75,19 +88,24 @@ The system extracts configured URL characteristics, transforms them into a featu
 | Machine Learning | scikit-learn |
 | Classification Algorithm | Random Forest |
 | Data Processing | pandas, NumPy |
-| Domain Parsing | tldextract |
-| Model Persistence | joblib |
+| Domain Parsing | tldextract, if used |
+| Model Persistence | joblib or the configured serialization method |
 | Domain Registration Lookup | python-whois, if implemented |
 | Database | SQLite, if scan logging is implemented |
 | Testing | pytest |
 | Version Control | Git and GitHub |
-| Continuous Integration | GitHub Actions, if configured |
+| Static Hosting | GitHub Pages |
+| CI/CD | GitHub Actions, if configured |
+
+Use the versions and dependencies defined in the actual project configuration.
 
 ---
 
-## Project Structure
+## 📁 Project Structure
 
-```text
+The following is a reference layout for the project. Existing filenames and directories may differ.
+
+\`\`\`text
 Phishing-Website-Detector/
 │
 ├── app.py
@@ -129,7 +147,7 @@ Phishing-Website-Detector/
 └── .github/
     └── workflows/
         └── test.yml
-```
+\`\`\`
 
 ### Important Files
 
@@ -137,136 +155,139 @@ Phishing-Website-Detector/
 |---|---|
 | `app.py` | Flask routes, web interface, and API endpoints |
 | `requirements.txt` | Python dependency definitions |
-| `src/feature_extraction.py` | Extracts features from URLs |
-| `src/train.py` | Prepares data, trains the model, and saves the artifact |
-| `src/predict.py` | Provides command-line and programmatic inference |
-| `models/phishing_model.pkl` | Serialized trained model |
-| `data/raw/dataset.csv` | Source dataset containing labeled URLs |
-| `data/processed/cleaned_data.csv` | Processed dataset, if generated by the training pipeline |
+| `src/feature_extraction.py` | Extracts URL features |
+| `src/train.py` | Trains the classification model |
+| `src/predict.py` | Provides prediction functionality |
+| `models/phishing_model.pkl` | Example serialized model artifact |
+| `data/raw/dataset.csv` | Example source dataset |
 | `templates/index.html` | HTML dashboard template |
 | `static/css/style.css` | Dashboard styling |
 | `static/js/main.js` | Frontend interactions |
-| `tests/test_pipeline.py` | Automated tests |
-| `scans.db` | SQLite scan records, if used by the application |
-| `.github/workflows/test.yml` | Continuous integration workflow |
+| `tests/test_pipeline.py` | Example automated tests |
+| `scans.db` | Optional SQLite scan history |
+| `.github/workflows/test.yml` | Optional CI workflow |
 
-**Note:** This is the intended project layout. Files that are not present in your repository should be created only if required by the implementation.
+**Note:** Do not assume these files exist. Check the repository before running commands that depend on them.
 
 ---
 
-## System Architecture
+## 🏗️ System Architecture
 
-```text
-                 ┌───────────────────────┐
-                 │       User Input      │
-                 │    Web / CLI / API    │
-                 └───────────┬───────────┘
-                             │
-                             ▼
-                 ┌───────────────────────┐
-                 │    Input Validation   │
-                 └───────────┬───────────┘
-                             │
-                             ▼
-                 ┌───────────────────────┐
-                 │   Feature Extraction  │
-                 └───────────┬───────────┘
-                             │
-                             ▼
-                 ┌───────────────────────┐
-                 │ Trained Random Forest │
-                 └───────────┬───────────┘
-                             │
-                             ▼
-                 ┌───────────────────────┐
-                 │  Classification Result│
-                 └───────────┬───────────┘
-                             │
-                             ▼
-                 ┌───────────────────────┐
-                 │ Result and Diagnostics│
-                 └───────────────────────┘
-```
+\`\`\`text
+              ┌──────────────────────┐
+              │      User Input      │
+              │    Web / CLI / API   │
+              └──────────┬───────────┘
+                         │
+                         ▼
+              ┌──────────────────────┐
+              │   Input Validation   │
+              └──────────┬───────────┘
+                         │
+                         ▼
+              ┌──────────────────────┐
+              │  Feature Extraction  │
+              └──────────┬───────────┘
+                         │
+                         ▼
+              ┌──────────────────────┐
+              │ Trained ML Classifier│
+              └──────────┬───────────┘
+                         │
+                         ▼
+              ┌──────────────────────┐
+              │   Classification     │
+              └──────────┬───────────┘
+                         │
+                         ▼
+              ┌──────────────────────┐
+              │ Results and Warnings │
+              └──────────────────────┘
+\`\`\`
 
 ### Processing Pipeline
 
 1. Receive a URL through the dashboard, CLI, or API.
-2. Validate the input and normalize it consistently with the training pipeline.
+2. Validate and normalize the input.
 3. Extract the features expected by the trained model.
 4. Generate a classification using the saved model.
 5. Evaluate configured heuristic checks, if available.
-6. Return the prediction and applicable diagnostics to the user.
+6. Return the prediction and applicable diagnostics.
 
 ---
 
-## Installation and Setup
+## ⚙️ Installation and Setup
 
 ### Prerequisites
 
-Install Python 3.10 or later and Git.
+- Python 3.10 or a version supported by the project dependencies.
+- Git.
+- pip.
 
 Verify the installations in PowerShell:
 
-```powershell
+\`\`\`powershell
 python --version
 python -m pip --version
 git --version
-```
+\`\`\`
 
 ### 1. Clone the Repository
 
-```powershell
+\`\`\`powershell
 git clone https://github.com/dhananjaychaudhary99/Phishing-Website-Detector.git
 Set-Location Phishing-Website-Detector
-```
+\`\`\`
 
 ### 2. Create a Virtual Environment
 
-```powershell
+\`\`\`powershell
 python -m venv .venv
-```
+\`\`\`
 
 ### 3. Activate the Environment
 
-```powershell
+\`\`\`powershell
 .\.venv\Scripts\Activate.ps1
-```
+\`\`\`
 
-If PowerShell blocks activation, allow scripts for the current terminal session only:
+If PowerShell blocks activation, allow scripts for the current terminal session:
 
-```powershell
+\`\`\`powershell
 Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
 .\.venv\Scripts\Activate.ps1
-```
+\`\`\`
 
 ### 4. Install Dependencies
 
-```powershell
+If `requirements.txt` exists:
+
+\`\`\`powershell
 python -m pip install --upgrade pip
 python -m pip install -r requirements.txt
-```
+\`\`\`
 
-### 5. Verify the Project Files
+### 5. Inspect the Project Files
 
-```powershell
+\`\`\`powershell
 Get-ChildItem
 Get-ChildItem src
 Get-ChildItem models
-```
+\`\`\`
 
-Check that the source dataset and trained model exist before running commands that depend on them.
+Confirm the actual dataset, model artifact, training script, and application entry point before proceeding.
 
 ---
 
-## Training the Model
+## 🤖 Training the Model
 
-Run the training script from the project root:
+If the repository contains `src/train.py`, run:
 
-```powershell
+\`\`\`powershell
 python src\train.py
-```
+\`\`\`
 
-The expected training workflow is:
+A typical training workflow includes:
 
 1. Load the labeled URL dataset.
 2. Validate and prepare the data.
@@ -276,75 +297,75 @@ The expected training workflow is:
 6. Evaluate the model on held-out data.
 7. Save the trained model to the configured output path.
 
-Expected paths, subject to the actual training configuration:
+Example paths, depending on the implementation:
 
-```text
+\`\`\`text
 data/raw/dataset.csv
 data/processed/cleaned_data.csv
 models/phishing_model.pkl
-```
+\`\`\`
 
 ### Model Evaluation
 
-Useful evaluation metrics include:
-
 | Metric | Purpose |
 |---|---|
-| Accuracy | Overall proportion of correct predictions |
+| Accuracy | Proportion of all predictions that are correct |
 | Precision | Proportion of predicted phishing URLs that are actually phishing |
 | Recall | Proportion of phishing URLs correctly identified |
 | F1-score | Harmonic mean of precision and recall |
-| Confusion Matrix | Shows false positives, false negatives, and correct classifications |
+| Confusion Matrix | Shows correct classifications, false positives, and false negatives |
 
-For phishing detection, evaluate false negatives and false positives carefully. A high accuracy score alone does not establish that the model is reliable.
+For phishing detection, evaluate false negatives and false positives carefully. Accuracy alone does not establish that a model is reliable.
+
+No performance score is claimed in this README.
 
 ---
 
-## Making Predictions
+## 🔎 Making Predictions
 
 ### Command-Line Interface
 
 If `src/predict.py` accepts a URL as a positional argument, use:
 
-```powershell
-python src\predict.py "http://example.com/login"
-```
+\`\`\`powershell
+python src\predict.py "https://example.com/login"
+\`\`\`
 
 Replace the example URL with the URL you want to analyze.
 
-If the script expects different arguments, use the interface implemented in `src/predict.py`.
+If the script requires different arguments, follow its implemented command-line interface.
 
 ### Python Integration
 
-A reusable prediction function can be called from another Python module if the project exposes an appropriate function.
+A reusable prediction function can be called from another Python module if the project exposes one.
 
 The model and feature extractor must use the same feature names, ordering, and preprocessing as the training pipeline.
 
 ---
 
-## Launching the Web Application
+## 🌐 Launching the Web Application
 
-Start the Flask application:
+If the Flask entry point is `app.py`, run:
 
-```powershell
+\`\`\`powershell
 python app.py
-```
+\`\`\`
 
 If the application uses Flask's default development configuration, open:
 
-**http://127.0.0.1:5000**
+**http://127.0.0.1:5000/**
 
-Keep the terminal open while using the application.
+Keep the terminal open while using the application. If the configured port differs, use the address printed by Flask.
 
-If the project configures a different port, use the address printed by Flask.
+Use Flask's development server for local development only. Production deployments should use an appropriate production WSGI server.
 
 ---
 
-## REST API
+## 🔌 REST API
 
-If the Flask application implements the `/api/predict` endpoint, it can accept JSON requests for URL classification.
+If the application implements the `/api/predict` endpoint, it may accept JSON requests for URL classification.
 
-| Property | Value |
+| Property | Example |
 |---|---|
 | Method | `POST` |
 | Endpoint | `/api/predict` |
@@ -353,17 +374,17 @@ If the Flask application implements the `/api/predict` endpoint, it can accept J
 
 ### Example Request
 
-```json
+\`\`\`json
 {
-  "url": "http://example.com/login"
+  "url": "https://example.com/login"
 }
-```
+\`\`\`
 
 ### PowerShell Request Example
 
-```powershell
+\`\`\`powershell
 $body = @{
-    url = "http://example.com/login"
+    url = "https://example.com/login"
 } | ConvertTo-Json
 
 Invoke-RestMethod `
@@ -371,27 +392,22 @@ Invoke-RestMethod `
     -Method Post `
     -ContentType "application/json" `
     -Body $body
-```
+\`\`\`
 
 ### Example Response Schema
 
-The following illustrates a possible response format. Actual field names and values must match the implementation.
+The following response is illustrative only. Actual fields and values must match the implemented API.
 
-```json
+\`\`\`json
 {
-  "url": "http://example.com/login",
+  "url": "https://example.com/login",
   "is_phishing": false,
   "confidence": 0.82,
-  "issues": [],
-  "features": {
-    "url_length": 23,
-    "has_ip_address": 0,
-    "is_https": 0
-  }
+  "issues": []
 }
-```
+\`\`\`
 
-The example prediction is illustrative, not an actual model result.
+The example classification and confidence are not actual model results.
 
 ### API Error Handling
 
@@ -408,9 +424,9 @@ Return appropriate HTTP status codes and avoid exposing stack traces or internal
 
 ---
 
-## Feature Engineering
+## 🧪 Feature Engineering
 
-The following table describes common URL features that may be used by this type of classifier. Confirm the exact feature set in `src/feature_extraction.py`.
+The following are examples of features commonly used in URL classification. Confirm the actual feature set in the implementation.
 
 | Feature | Category | Purpose |
 |---|---|---|
@@ -429,29 +445,29 @@ The following table describes common URL features that may be used by this type 
 - A long URL or unusual top-level domain is not sufficient evidence of phishing.
 - Feature extraction must remain consistent between training and prediction.
 - Heuristic warnings should be distinguished from model-generated predictions.
-- Features based on domain registration or external reputation require additional lookups and appropriate error handling.
+- External domain lookups require appropriate error handling and may return incomplete or stale information.
 
 ---
 
-## Testing
+## 🧫 Testing
 
-Run the test suite from the project root:
+If pytest tests are available under `tests/`, run:
 
-```powershell
+\`\`\`powershell
 python -m pytest tests/ -v
-```
+\`\`\`
 
 Run a specific test file:
 
-```powershell
+\`\`\`powershell
 python -m pytest tests/test_pipeline.py -v
-```
+\`\`\`
 
-If pytest is not installed and is not included in `requirements.txt`:
+If pytest is missing and is not included in `requirements.txt`:
 
-```powershell
+\`\`\`powershell
 python -m pip install pytest
-```
+\`\`\`
 
 ### Recommended Test Coverage
 
@@ -462,87 +478,116 @@ python -m pip install pytest
 - API success and error responses.
 - Missing model and dataset handling.
 - Empty input and malformed JSON.
-- Classification behavior on representative test samples.
+- Representative phishing and legitimate URL samples.
 
 ---
 
-## Security Considerations
+## 🔒 Security Considerations
 
-- **Treat predictions as advisory:** Never rely on the model as the sole security control.
-- **Do not automatically open suspicious URLs:** Analyze URL strings without navigating to potentially malicious destinations.
-- **Avoid unsafe external requests:** If reputation checks or domain lookups are added, validate destinations and defend against server-side request forgery (SSRF).
-- **Protect API endpoints:** Apply request validation, sensible size limits, rate limiting, and appropriate access controls where needed.
-- **Keep secrets out of source control:** Store credentials and configuration secrets in environment variables or a dedicated secret manager.
-- **Use safe deployment settings:** Do not expose Flask's development server as a production service. Use a production WSGI server, appropriate HTTPS termination, and secure configuration.
-- **Protect model artifacts:** Load serialized models only from trusted sources because pickle-based artifacts can execute code during deserialization.
-- **Handle scan logs carefully:** Avoid storing sensitive query parameters or other private URL data unnecessarily.
+- **Treat predictions as advisory:** Do not rely on the model as the sole security control.
+- **Avoid opening suspicious URLs automatically:** Analyze URL strings without navigating to potentially malicious destinations.
+- **Prevent unsafe external requests:** If the application performs reputation lookups, validate destinations and defend against server-side request forgery (SSRF).
+- **Protect API endpoints:** Apply input validation, sensible request limits, rate limiting, and access controls where needed.
+- **Protect secrets:** Store credentials and sensitive configuration outside public source files.
+- **Use secure deployment settings:** Do not expose Flask's development server as a production service.
+- **Protect model artifacts:** Load pickle-based serialized models only from trusted sources because deserialization can execute code.
+- **Handle scan logs carefully:** Avoid storing sensitive URL parameters or private information unnecessarily.
 
 ---
 
-## Limitations
+## ⚠️ Limitations
 
 - Classification performance depends on dataset quality, diversity, and label accuracy.
-- New phishing campaigns may evade models trained on older data.
-- Lexical analysis does not necessarily inspect webpage content, JavaScript behavior, redirects, or visual impersonation.
-- Benign websites can contain suspicious-looking URL patterns.
-- Phishing websites can use HTTPS and otherwise appear technically valid.
-- Prediction confidence is not necessarily a calibrated probability of a URL being malicious.
-- External domain lookups may fail, become unavailable, or return stale information.
+- Newly created phishing campaigns may evade models trained on older data.
+- URL-based analysis does not necessarily inspect page content, JavaScript behavior, redirects, or visual impersonation.
+- Legitimate websites can exhibit suspicious-looking URL patterns.
+- Phishing websites can use HTTPS.
+- Prediction confidence is not necessarily a calibrated probability of maliciousness.
+- External domain lookups can fail, become unavailable, or return stale information.
+- Static GitHub Pages hosting cannot run the Python model or Flask backend.
 
 ---
 
-## Troubleshooting
+## 🛠️ Troubleshooting
 
 | Problem | Possible Cause | Solution |
 |---|---|---|
-| `ModuleNotFoundError` | Dependencies are missing or the wrong Python environment is active | Activate `.venv` and install `requirements.txt` |
-| `FileNotFoundError` for the dataset | Dataset path is incorrect or the file is missing | Verify `data/raw/dataset.csv` |
-| Model file not found | Training has not completed or the output path differs | Run the training script and verify the configured model path |
-| Feature dimension mismatch | Training and inference use different features | Use the same feature extraction pipeline and feature ordering |
-| Flask import or startup error | Missing dependency or configuration problem | Inspect the traceback and install required dependencies |
-| Port 5000 is already in use | Another process is using the port | Stop the relevant process or configure another port |
-| API returns 404 | Endpoint is missing or the route differs | Inspect the Flask route definitions in `app.py` |
-| API returns 400 | Request body or URL input is invalid | Send valid JSON with the required `url` field |
-| Unexpected classification | Dataset imbalance, poor features, or model limitations | Evaluate precision, recall, and representative test samples |
-| GitHub Actions fails | Dependency, environment, or test configuration mismatch | Review the workflow logs and reproduce the failing test locally |
+| `ModuleNotFoundError` | Missing dependency or incorrect Python environment | Activate `.venv` and install `requirements.txt` |
+| Dataset not found | Missing file or incorrect path | Verify the configured dataset path |
+| Model file not found | Model has not been trained or path differs | Run the training script and verify the model output path |
+| Feature dimension mismatch | Training and inference use different features | Use the same preprocessing and feature ordering |
+| Flask startup error | Missing dependency or configuration issue | Inspect the terminal traceback |
+| Port already in use | Another process is using the port | Stop that process or configure another port |
+| API returns 404 | Endpoint path differs | Inspect the Flask route definitions |
+| API returns 400 | Invalid request body or URL | Send valid JSON with the required field |
+| Unexpected classification | Dataset imbalance, limited features, or model limitations | Evaluate precision, recall, and representative test samples |
+| GitHub Actions fails | Dependency or test configuration mismatch | Review workflow logs and reproduce the failing test locally |
+| GitHub Pages loads but predictions fail | Backend is unavailable or not configured | Deploy the backend and verify frontend API configuration |
 
 ---
 
-## Future Improvements
+## 🚀 Deployment
 
-- **Threat Intelligence:** Integrate trusted URL reputation feeds with appropriate rate limits and licensing.
-- **Improved Datasets:** Evaluate regularly updated, deduplicated phishing and legitimate URL datasets.
-- **Model Comparison:** Compare Random Forest with other suitable classification approaches.
-- **Explainability:** Report meaningful feature contributions without presenting heuristic correlations as proof.
-- **Browser Extension:** Add optional warnings when users encounter suspicious links.
-- **Database Integration:** Store scan history with retention controls and appropriate privacy protections.
-- **Production Deployment:** Add structured logging, monitoring, configuration management, and automated deployment.
-- **Continuous Evaluation:** Monitor false positives, false negatives, and model performance drift.
-- **Security Testing:** Add validation, dependency scanning, and tests for unsafe URL handling.
+### GitHub Pages — Frontend
+
+The published project website is available at:
+
+**[https://dhananjaychaudhary99.github.io/Phishing-Website-Detector/](https://dhananjaychaudhary99.github.io/Phishing-Website-Detector/)**
+
+GitHub Pages hosts compatible static assets such as HTML, CSS, and JavaScript. It does not execute Flask or Python machine learning code.
+
+### Flask Backend
+
+For online predictions, deploy the Flask backend to a Python-compatible hosting service and configure the frontend to call the backend's public HTTPS endpoint.
+
+Before deploying, verify that:
+
+- The model and preprocessing artifacts are available.
+- The production server starts correctly.
+- API input validation and error handling work.
+- CORS permits only intended frontend origins, where applicable.
+- Secrets and configuration are managed securely.
+- The frontend can successfully reach the backend.
+
+No backend hosting provider or backend deployment URL is specified because it has not been confirmed.
 
 ---
 
-## Author
+## 🔮 Future Improvements
+
+- Integrate trusted URL reputation sources with appropriate rate limits and licensing.
+- Evaluate regularly updated phishing and legitimate URL datasets.
+- Compare Random Forest with other suitable classification algorithms.
+- Add model explainability without treating correlations as proof of maliciousness.
+- Develop an optional browser extension for suspicious-link warnings.
+- Add scan history with privacy controls and retention limits.
+- Improve production logging, monitoring, and deployment automation.
+- Monitor false positives, false negatives, and model performance drift.
+- Add security testing for input validation and unsafe URL handling.
+
+---
+
+## 👨‍💻 Author
 
 **Dhananjay Chaudhary**
 
 - **GitHub:** [@dhananjaychaudhary99](https://github.com/dhananjaychaudhary99)
-- **Portfolio:** [dhananjaychaudhary99.github.io/Portfolio](https://dhananjaychaudhary99.github.io/Portfolio/)
+- **Portfolio:** [Personal Portfolio](https://dhananjaychaudhary99.github.io/Portfolio/)
 - **Project Repository:** [Phishing Website Detector](https://github.com/dhananjaychaudhary99/Phishing-Website-Detector)
 
 ---
 
-## License
+## 📜 License
 
-This project is intended to use the MIT License. Review the repository's `LICENSE` file to confirm the actual license and applicable terms.
+The project's license should match the `LICENSE` file in the repository. If no license has been added, select and include an appropriate license before claiming specific open-source reuse permissions.
 
 ---
 
-## Acknowledgments
+## 🙏 Acknowledgments
 
 Built with Python, Flask, and scikit-learn to explore machine-learning-assisted phishing URL classification and defensive cybersecurity analysis.
 
 ---
 
-**Disclaimer:** This project is intended for educational and defensive security purposes. It does not guarantee detection of every phishing URL and should not replace established security controls.
+**Disclaimer:** This project is intended for educational and defensive cybersecurity purposes. It does not guarantee detection of every phishing URL and should not replace established security controls.
 '@
