@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CyberShield - Phishing Detector</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <div class="container">
+    <div class="glass-card">
+      <div class="brand-header">
+        <h1 class="brand-title">??? CyberShield Detector</h1>
+        <p class="brand-sub">Real-Time Threat Intelligence & Heuristic AI Engine</p>
+      </div>
+
+      <form method="POST" id="scanForm">
+        <div class="search-box">
+          <input type="text" name="url" id="urlInput" placeholder="Enter website address (e.g., https://example.com)" value="{{ request.form.get('url', '') }}" required autocomplete="off" />
+          <button type="submit" class="btn-scan" id="submitBtn">Analyze</button>
+        </div>
+      </form>
+      
+      <div class="loader" id="loader"></div>
+
+      {% if data %}
+      <div class="result-card {{ 'result-danger' if data.is_phishing else 'result-safe' }}">
+        <div class="result-title">
+          {{ "?? Dangerous / Phishing Detected" if data.is_phishing else "? Verified Safe / Legitimate" }}
+        </div>
+        <div class="result-meta">
+          Model Confidence: <strong>{{ (data.confidence * 100) | round(2) }}%</strong>
+        </div>
+      </div>
+
+      {% if issues %}
+      <div class="issues-wrapper">
+        <h4>?? Flagged Vulnerabilities & Heuristics:</h4>
+        <ul class="issues-list">
+          {% for issue in issues %}
+            <li>{{ issue }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% else %}
+      <div class="clean-wrapper">
+        ? <strong>Safe Status:</strong> Zero suspicious lexical or structural red flags detected.
+      </div>
+      {% endif %}
+
+      <div class="section-heading">?? Deep Heuristic Breakdown</div>
+      <table class="styled-table">
+        <thead>
+          <tr>
+            <th>Security Parameter</th>
+            <th>Observed State</th>
+            <th>Evaluation</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Domain Registry Age</td>
+            <td>{{ domain_age_text }}</td>
+            <td><span class="badge {{ 'badge-ok' if 'days old' in domain_age_text and not issues else 'badge-warn' }}">Telemetry</span></td>
+          </tr>
+          <tr>
+            <td>Transport Protocol</td>
+            <td>{{ "HTTPS Secure" if data.features.is_https == 1 else "HTTP Unencrypted" }}</td>
+            <td><span class="badge {{ 'badge-ok' if data.features.is_https == 1 else 'badge-risk' }}">{{ 'Secure' if data.features.is_https == 1 else 'Insecure' }}</span></td>
+          </tr>
+          <tr>
+            <td>Host Identifier</td>
+            <td>{{ "Numerical IP Host" if data.features.has_ip_address == 1 else "Registered Domain" }}</td>
+            <td><span class="badge {{ 'badge-risk' if data.features.has_ip_address == 1 else 'badge-ok' }}">{{ 'Malicious' if data.features.has_ip_address == 1 else 'Clean' }}</span></td>
+          </tr>
+          <tr>
+            <td>URL Obfuscation</td>
+            <td>{{ "Shortener Service" if data.features.is_shortened == 1 else "Direct FQDN" }}</td>
+            <td><span class="badge {{ 'badge-risk' if data.features.is_shortened == 1 else 'badge-ok' }}">{{ 'Obfuscated' if data.features.is_shortened == 1 else 'Direct' }}</span></td>
+          </tr>
+          <tr>
+            <td>Targeted Keywords</td>
+            <td>{{ data.features.keyword_hits }} matches</td>
+            <td><span class="badge {{ 'badge-risk' if data.features.keyword_hits > 0 else 'badge-ok' }}">{{ 'High Risk' if data.features.keyword_hits > 0 else 'Clean' }}</span></td>
+          </tr>
+          <tr>
+            <td>Subdomain Structure</td>
+            <td>{{ data.features.num_subdomains }} levels</td>
+            <td><span class="badge {{ 'badge-risk' if data.features.num_subdomains > 2 else 'badge-ok' }}">{{ 'Deep (Spoofing)' if data.features.num_subdomains > 2 else 'Standard' }}</span></td>
+          </tr>
+          <tr>
+            <td>URL Payload Length</td>
+            <td>{{ data.features.url_length }} chars</td>
+            <td><span class="badge {{ 'badge-warn' if data.features.url_length > 75 else 'badge-ok' }}">{{ 'High Density' if data.features.url_length > 75 else 'Standard' }}</span></td>
+          </tr>
+        </tbody>
+      </table>
+      {% endif %}
+    </div>
+
+    {% if recent_scans %}
+    <div class="glass-card">
+      <div class="section-heading">?? Recent Inspection Logs</div>
+      <table class="styled-table">
+        <thead>
+          <tr>
+            <th>Monitored Target</th>
+            <th>Status</th>
+            <th>Confidence</th>
+            <th>Timestamp</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for scan in recent_scans %}
+          <tr>
+            <td style="max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: monospace;">{{ scan.url }}</td>
+            <td><span class="badge {{ 'badge-risk' if scan.is_phishing else 'badge-ok' }}">{{ 'Phishing' if scan.is_phishing else 'Safe' }}</span></td>
+            <td>{{ (scan.confidence * 100) | round(1) }}%</td>
+            <td style="color: var(--text-muted); font-size: 13px;">{{ scan.timestamp }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% endif %}
+  </div>
+
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

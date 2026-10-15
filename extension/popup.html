@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    body { font-family: sans-serif; width: 280px; padding: 12px; margin: 0; }
+    h4 { margin: 0 0 10px; font-size: 14px; }
+    #status { padding: 8px; border-radius: 4px; font-size: 13px; font-weight: bold; margin-bottom: 8px; display: none; }
+    .safe { background: #dcfce7; color: #166534; }
+    .phish { background: #fee2e2; color: #991b1b; }
+    #url { word-break: break-all; font-size: 11px; color: #64748b; margin-bottom: 10px; }
+    button { width: 100%; padding: 8px; background: #0284c7; color: white; border: none; border-radius: 4px; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <h4>Phishing Shield</h4>
+  <div id="url">Detecting current tab...</div>
+  <div id="status"></div>
+  <button id="scanBtn">Scan Active URL</button>
+
+  <script>
+    document.getElementById("scanBtn").addEventListener("click", async () => {
+      let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+      document.getElementById("url").innerText = tab.url;
+      try {
+        let res = await fetch("http://127.0.0.1:5000/api/predict", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ url: tab.url })
+        });
+        let data = await res.json();
+        let el = document.getElementById("status");
+        el.style.display = "block";
+        if (data.is_phishing) {
+          el.className = "phish";
+          el.innerText = `Threat Flagged (${(data.confidence*100).toFixed(1)}%)`;
+        } else {
+          el.className = "safe";
+          el.innerText = `Verified Safe (${(data.confidence*100).toFixed(1)}%)`;
+        }
+      } catch (err) {
+        alert("Make sure local server (app.py) is running on port 5000!");
+      }
+    });
+  </script>
+</body>
+</html>
